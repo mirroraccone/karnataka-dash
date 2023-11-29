@@ -6,6 +6,6 @@ RUN pip install --no-cache-dir -r Requirements.txt
 
 COPY . .
 
-EXPOSE $PORT
+EXPOSE 8050
 
 CMD ["python","viz.py"]
