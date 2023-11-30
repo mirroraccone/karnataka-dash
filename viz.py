@@ -6,6 +6,8 @@ df_blocks = pd.read_csv('Block_level_karnataka_new.csv')
 df_district = pd.read_csv('District_level_karnataka_new.csv')
 gdf= gpd.read_file('District/District.shp')
 
+df_blocks['Block'] = df_blocks['Block'].str.title()
+
 import pickle
 with open('mapper.pkl', 'rb') as f:
     mapper = pickle.load(f)
