@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
 import geopandas as gpd
-from dash import dash_table
 
 df_blocks = pd.read_csv('Block_level_karnataka_new.csv')
 df_district = pd.read_csv('District_level_karnataka_new.csv')
@@ -65,6 +64,7 @@ from dash.dependencies import Input, Output
 import plotly.express as px
 import pandas as pd
 import geopandas as gpd
+from dash import dash_table
 import plotly.graph_objects as go
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
@@ -572,4 +572,4 @@ def multibargraph2(selected_district):
 
 
 if __name__ == '__main__':
-    app.run_server(debug=False,host="0.0.0.0")
+    app.run_server(debug=True)
