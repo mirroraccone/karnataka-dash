@@ -1,4 +1,4 @@
-State,District,Block,Percentage of Households with Tap Connection,Perc HH Connection Reported,Perc HH Connection Certified,Percentage of Reported Households with Tap Connection,Percentage of Certified Households with Tap Connection,Percentage of Certified Households among Reported,Year,Updated_Name
+State,District,Block,Tap water connection Coverage,Reporting by Implementing Departments (Reporting rate),Certification by Gram Sabhas (Certification Rate),Reporting to Coverage Ratio,Certification to Coverage Ratio,Certification to Reporting Ratio,Year,Updated_Name
 Karnataka,Bagalkote,Badami,35.7269601,0,0,0,0,0,2021,Bagalkot
 Karnataka,Bagalkote,Bagalkote,24.05112578,0,0,0,0,0,2021,Bagalkot
 Karnataka,Bagalkote,Bilagi,28.95593536,1.235321474,0,4.266211604,0,0,2021,Bagalkot

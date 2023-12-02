@@ -1,4 +1,4 @@
-State,District,Percentage of Households with Tap Connection,Perc HH Connection Reported,Perc HH Connection Certified,Percentage of Reported Households with Tap Connection,Percentage of Certified Households with Tap Connection,Percentage of Certified Households among Reported,Year,Updated_Name
+State,District,Tap water connection Coverage,Reporting by Implementing Departments (Reporting rate),Certification by Gram Sabhas (Certification Rate),Reporting to Coverage Ratio,Certification to Coverage Ratio,Certification to Reporting Ratio,Year,Updated_Name
 Karnataka,Bagalkote,37.11071359,0.136493122,0,0.367799778,0,0,2021,Bagalkot
 Karnataka,Ballari,31.92322188,0.083983488,0,0.263079612,0,0,2021,Ballari
 Karnataka,Bangalore Rural,19.28097401,0,0,0,0,0,2021,Bengaluru (Rural)
