@@ -1,12 +1,53 @@
 import pandas as pd
 import numpy as np
 import geopandas as gpd
+from dash import dash_table
 
 df_blocks = pd.read_csv('Block_level_karnataka_new.csv')
 df_district = pd.read_csv('District_level_karnataka_new.csv')
 gdf= gpd.read_file('District/District.shp')
 
 df_blocks['Block'] = df_blocks['Block'].str.title()
+
+data = {
+    'Serial No.': [1, 2, 3, 4, 5, 6],
+    'Metric name': [
+        'Tap water connection Coverage',
+        'Reporting by Implementing Departments (Reporting rate)',
+        'Certification by Gram Sabhas (Certification Rate)',
+        'Reporting to Coverage Ratio',
+        'Certification to Coverage Ratio',
+        'Certification to Reporting Ratio'
+    ],
+    'Definition': [
+        'The proportion of households with a tap connection out of the total number of households.',
+        'The number of households reported by the implementing departments as having achieved the “Har Ghar Jal” status.',
+        'The number of households certified by the Gram Sabhas as having achieved the “Har Ghar Jal” status.',
+        'It is the ratio of the number of households reported by implementing agencies as having a functional tap water connection to the total number of households with a tap water connection.',
+        'It is the ratio of the number of households certified by Gram Sabhas as having a functional tap water connection to the total number of households with a tap water connection.',
+        'It is the ratio of the number of households certified by Gram Sabhas as having a functional tap water connection to the total number of households reported by implementing agencies to have tap water connection.'
+    ],
+    'Calculation': [
+        '(Households with Tap Connection / Total Households) x 100',
+        '(Reported Households / Total Households) x 100',
+        '(Certified Households / Total Households) x 100',
+        '(Number of Reported Households with Tap Connection / Total Number of Households with Tap Connection) x 100',
+        '(Number of Certified Households with Tap Connection / Total Number of Households with Tap Connection) x 100',
+        '(Number of Har Ghar Jal households certified by Gram Sabhas / Total number of Har Ghar Jal households reported by implementing agencies) x 100'
+    ],
+    'Significance': [
+        'Indicates accessibility and the extent of coverage of tap water connections for rural households',
+        'Reflects effectiveness and rigor of administrative monitoring systems and data transparency',
+        'Assesses participation and the accuracy of progress claims based on Gram Sabha verification processes.',
+        'Evaluates accuracy of reported data versus actual coverage to reveal potential priority issues about reporting by the implementing agencies',
+        'Examines robustness of certification mechanism and sustainability of the certification process by the Gram Sabhas.',
+        'Compares consistency between the implementing agencies and the Gram Sabhas in delivering and monitoring the certification program.'
+    ],
+    'Ideal Range': ['90-100%', '75-100%', '70-100%', '90-100%', '75-100%', '90-100%']
+}
+
+df_table = pd.DataFrame(data)
+
 
 import pickle
 with open('mapper.pkl', 'rb') as f:
@@ -57,7 +98,7 @@ app.layout = html.Div(style={'backgroundColor': '#f2f2f2'}, children=[
                 options=[{'label': district, 'value': district} for district in sorted(df_district['Updated_Name'].unique())],
                 multi=False
             )
-        ], className='two columns'),
+        ], className='two columns',style={'justify-content':'space-around','padding': '10px', 'border-radius': '15px'}),
         
         # Dropdown for block
         html.Div([
@@ -74,16 +115,16 @@ app.layout = html.Div(style={'backgroundColor': '#f2f2f2'}, children=[
             dcc.Dropdown(
                 id='metric-dropdown',
                 options=[
-                        'Percentage of Households with Tap Connection',
-                        'Perc HH Connection Reported',
-                        'Perc HH Connection Certified',
-                        'Percentage of Reported Households with Tap Connection',
-                        'Percentage of Certified Households with Tap Connection',
-                        'Percentage of Certified Households among Reported',
+                        'Tap water connection Coverage',
+                        'Reporting by Implementing Departments (Reporting rate)',
+                        'Certification by Gram Sabhas (Certification Rate)',
+                        'Reporting to Coverage Ratio',
+                        'Certification to Coverage Ratio',
+                        'Certification to Reporting Ratio',
                     
                 ],
                 multi=False,
-                value='Percentage of Households with Tap Connection'
+                value='Tap water connection Coverage'
             )
         ], className='two columns', style={'width': '30%', 'display': 'inline-block'}),
         
@@ -98,6 +139,19 @@ app.layout = html.Div(style={'backgroundColor': '#f2f2f2'}, children=[
             )
         ], className='two columns')
     ], className='row'),
+
+    html.Div([
+        dash_table.DataTable(
+            id='my-table',
+            columns=[
+                {'name': col, 'id': col} for col in df_table.columns
+            ],
+            data=df_table.to_dict('records'),
+            style_table={'height': '300px', 'overflowY': 'auto', 'overflowX': 'auto'},
+            style_cell={'whiteSpace': 'normal', 'textAlign': 'left'}
+        )
+    ],
+    style={'width': '100%'}),
     
     # Middle Row for the choropleth map
     html.Div([
@@ -294,13 +348,13 @@ def update_all_metrics_bar_chart(selected_district, selected_year):
 
     # List of all metrics
     all_metrics = [
-        'Percentage of Households with Tap Connection',
-        'Perc HH Connection Reported',
-        'Perc HH Connection Certified',
-        'Percentage of Reported Households with Tap Connection',
-        'Percentage of Certified Households with Tap Connection',
-        'Percentage of Certified Households among Reported'
-    ]
+        'Tap water connection Coverage',
+        'Reporting by Implementing Departments (Reporting rate)',
+        'Certification by Gram Sabhas (Certification Rate)',
+        'Reporting to Coverage Ratio',
+        'Certification to Coverage Ratio',
+        'Certification to Reporting Ratio'
+    ][::-1]
 
     # Aggregate data for the entire district
     aggregated_data = filtered_data.groupby('Year')[all_metrics].mean().reset_index()
@@ -351,13 +405,13 @@ def update_all_metrics_bar_chart_block(selected_district, selected_block, select
 
     # List of all metrics
     all_metrics = [
-        'Percentage of Households with Tap Connection',
-        'Perc HH Connection Reported',
-        'Perc HH Connection Certified',
-        'Percentage of Reported Households with Tap Connection',
-        'Percentage of Certified Households with Tap Connection',
-        'Percentage of Certified Households among Reported'
-    ]
+        'Tap water connection Coverage',
+        'Reporting by Implementing Departments (Reporting rate)',
+        'Certification by Gram Sabhas (Certification Rate)',
+        'Reporting to Coverage Ratio',
+        'Certification to Coverage Ratio',
+        'Certification to Reporting Ratio'
+    ][::-1]
 
     # Melting the DataFrame
     melted_data = pd.melt(
@@ -401,7 +455,7 @@ def update_continuous_y_chart(selected_metric, selected_year):
     # Filter data based on selected options
     filtered_data = df_district[
         (df_district['Year'] == selected_year)
-    ].sort_values(by='Percentage of Households with Tap Connection', ascending=True)
+    ].sort_values(by='Tap water connection Coverage', ascending=True)
 
     # Create and return the line chart
     fig = px.bar(
@@ -434,13 +488,13 @@ def multibargraph(selected_district):
     filtered_data = df_blocks[df_blocks['Updated_Name'] == selected_district]
 
     # Sort data by the first variable
-    sorted_data = filtered_data.sort_values(by='Percentage of Households with Tap Connection', ascending=True)
+    sorted_data = filtered_data.sort_values(by='Tap water connection Coverage', ascending=True)
 
     # Create the multi-bar graph
     fig = go.Figure()
 
     # Add bars for each variable
-    for variable in ['Percentage of Reported Households with Tap Connection', 'Percentage of Certified Households with Tap Connection','Percentage of Households with Tap Connection']:
+    for variable in ['Reporting by Implementing Departments (Reporting rate)', 'Certification by Gram Sabhas (Certification Rate)','Tap water connection Coverage']:
         fig.add_trace(go.Bar(
             x=sorted_data[variable],
             y=sorted_data['Block'],
@@ -464,7 +518,7 @@ def multibargraph(selected_district):
         bargap=0.2,        # Adjust the gap between bars
         bargroupgap=0.1,   # Adjust the gap between bar groups
         height=800,        # Increase height
-        legend=dict(x=0.5, y=-0.15, orientation='h')
+        legend=dict(x=0, y=-0.15, orientation='h')
     )
 
     return fig
@@ -473,7 +527,7 @@ def multibargraph(selected_district):
     Output('multibargraph2', 'figure'),
     [Input('district-dropdown', 'value')]
 )
-def multibargraph(selected_district):
+def multibargraph2(selected_district):
     if not selected_district:
         return go.Figure()  # Empty figure
     
@@ -481,13 +535,13 @@ def multibargraph(selected_district):
     filtered_data = df_blocks[df_blocks['Updated_Name'] == selected_district]
 
     # Sort data by the first variable
-    sorted_data = filtered_data.sort_values(by='Percentage of Households with Tap Connection', ascending=True)
+    sorted_data = filtered_data.sort_values(by='Tap water connection Coverage', ascending=True)
 
     # Create the multi-bar graph
     fig = go.Figure()
 
     # Add bars for each variable
-    for variable in ['Percentage of Certified Households among Reported','Percentage of Households with Tap Connection' ]:
+    for variable in ['Certification to Reporting Ratio','Tap water connection Coverage' ]:
         fig.add_trace(go.Bar(
             x=sorted_data[variable],
             y=sorted_data['Block'],
@@ -511,7 +565,7 @@ def multibargraph(selected_district):
         bargap=0.2,        # Adjust the gap between bars
         bargroupgap=0.1,   # Adjust the gap between bar groups
         height=800,        # Increase height
-        legend=dict(x=0.5, y=-0.15, orientation='h')
+        legend=dict(x=0, y=-0.15, orientation='h')
     )
 
     return fig
