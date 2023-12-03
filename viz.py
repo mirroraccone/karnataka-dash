@@ -478,14 +478,15 @@ def update_continuous_y_chart(selected_metric, selected_year):
     
 @app.callback(
     Output('multibargraph', 'figure'),
-    [Input('district-dropdown', 'value')]
+    [Input('district-dropdown', 'value'),
+     Input('year-dropdown', 'value')]
 )
-def multibargraph(selected_district):
+def multibargraph(selected_district,selected_year):
     if not selected_district:
         return go.Figure()  # Empty figure
     
     # Filter data based on selected district
-    filtered_data = df_blocks[df_blocks['Updated_Name'] == selected_district]
+    filtered_data = df_blocks[(df_blocks['Updated_Name'] == selected_district) & (df_blocks['Year'] == selected_year)]
 
     # Sort data by the first variable
     sorted_data = filtered_data.sort_values(by='Tap water connection Coverage', ascending=True)
@@ -513,7 +514,7 @@ def multibargraph(selected_district):
     fig.update_layout(
         # title=f'Tap Connection Statistics for {selected_district}',
         xaxis=dict(title='Percentage'),
-        yaxis=dict(title='District Name'),
+        yaxis=dict(title='Block Name'),
         barmode='group',
         bargap=0.2,        # Adjust the gap between bars
         bargroupgap=0.1,   # Adjust the gap between bar groups
@@ -525,14 +526,16 @@ def multibargraph(selected_district):
 
 @app.callback(
     Output('multibargraph2', 'figure'),
-    [Input('district-dropdown', 'value')]
+    [Input('district-dropdown', 'value'),
+     Input('year-dropdown', 'value')]
 )
-def multibargraph2(selected_district):
+def multibargraph2(selected_district,selected_year):
     if not selected_district:
         return go.Figure()  # Empty figure
     
     # Filter data based on selected district
-    filtered_data = df_blocks[df_blocks['Updated_Name'] == selected_district]
+    filtered_data = df_blocks[(df_blocks['Updated_Name'] == selected_district) & (df_blocks['Year'] == selected_year)]
+
 
     # Sort data by the first variable
     sorted_data = filtered_data.sort_values(by='Tap water connection Coverage', ascending=True)
@@ -560,7 +563,7 @@ def multibargraph2(selected_district):
     fig.update_layout(
         # title=f'Tap Connection Statistics for {selected_district}',
         xaxis=dict(title='Percentage'),
-        yaxis=dict(title='District Name'),
+        yaxis=dict(title='Block Name'),
         barmode='group',
         bargap=0.2,        # Adjust the gap between bars
         bargroupgap=0.1,   # Adjust the gap between bar groups
