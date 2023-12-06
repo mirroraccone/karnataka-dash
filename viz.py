@@ -156,7 +156,7 @@ app.layout = html.Div(style={'backgroundColor': '#f2f2f2'}, children=[
     html.Div([
         dcc.Link(
         'Click here for Certification Maps',
-        href='https://www.google.com',
+        href='https://jjm-observation.netlify.app/',
         target='_blank',
         style={
             'width': '100%',
@@ -174,10 +174,10 @@ app.layout = html.Div(style={'backgroundColor': '#f2f2f2'}, children=[
     ],
     style={'width': '100%','display': 'flex', 'justify-content': 'center'}),
 
-    html.Div([
-        dcc.Link('Click here for Certification Maps', href='https://jjm-observation.netlify.app/',target='_blank')
-    ],
-    style={'width': '100%','text-align': 'center'}),
+    # html.Div([
+    #     dcc.Link('Click here for Certification Maps', href='https://jjm-observation.netlify.app/',target='_blank')
+    # ],
+    # style={'width': '100%','text-align': 'center'}),
     
     # Middle Row for the choropleth map
     html.Div([
