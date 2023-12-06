@@ -154,6 +154,27 @@ app.layout = html.Div(style={'backgroundColor': '#f2f2f2'}, children=[
     style={'width': '100%'}),
 
     html.Div([
+        dcc.Link(
+        'Click here for Certification Maps',
+        href='https://www.google.com',
+        target='_blank',
+        style={
+            'width': '100%',
+            'text-align': 'center',
+            'textDecoration': 'none',  # Remove underline
+            'color': 'inherit',  # Inherit text color
+            'font-weight': 'bold',  # Bold text
+            'font-size': '18px',  # Adjust font size
+            'padding': '10px',  # Add padding
+            'borderRadius': '10px',  # Add border radius
+            'background': 'linear-gradient(to right, #ffcc00, #ff9900)',  # Gradient background
+            'boxShadow': '0 0 10px rgba(255, 153, 0, 0.8)',  # Glowing effect
+        }
+    ),
+    ],
+    style={'width': '100%','display': 'flex', 'justify-content': 'center'}),
+
+    html.Div([
         dcc.Link('Click here for Certification Maps', href='https://jjm-observation.netlify.app/',target='_blank')
     ],
     style={'width': '100%','text-align': 'center'}),
