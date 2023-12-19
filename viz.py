@@ -516,12 +516,16 @@ def multibargraph(selected_district,selected_year):
 
     # Sort data by the first variable
     sorted_data = filtered_data.sort_values(by='Tap water connection Coverage', ascending=True)
-
+    colors = {
+        'Reporting by Implementing Departments (Reporting rate)': 'orange',
+        'Certification by Gram Sabhas (Certification Rate)': 'green',
+        'Tap water connection Coverage': 'blue'
+    }
     # Create the multi-bar graph
     fig = go.Figure()
 
     # Add bars for each variable
-    for variable in ['Reporting by Implementing Departments (Reporting rate)', 'Certification by Gram Sabhas (Certification Rate)','Tap water connection Coverage']:
+    for variable in ['Certification by Gram Sabhas (Certification Rate)','Reporting by Implementing Departments (Reporting rate)', 'Tap water connection Coverage']:
         fig.add_trace(go.Bar(
             x=sorted_data[variable],
             y=sorted_data['Block'],
@@ -529,7 +533,7 @@ def multibargraph(selected_district,selected_year):
             orientation='h',  # Set orientation to horizontal
             text=sorted_data[variable].apply(lambda x: f'{x:.1f}%'),  # Display data labels on the bars
             textposition='outside',
-            marker=dict(line=dict(width=0)),
+            marker=dict(line=dict(width=0),color=colors[variable]),
             # showlegend=False, 
         ))
 
@@ -565,7 +569,7 @@ def multibargraph2(selected_district,selected_year):
 
     # Sort data by the first variable
     sorted_data = filtered_data.sort_values(by='Tap water connection Coverage', ascending=True)
-
+    colors = {'Certification to Reporting Ratio': 'maroon', 'Tap water connection Coverage': 'blue'}
     # Create the multi-bar graph
     fig = go.Figure()
 
@@ -578,7 +582,7 @@ def multibargraph2(selected_district,selected_year):
             orientation='h',  # Set orientation to horizontal
             text=sorted_data[variable].apply(lambda x: f'{x:.1f}%'),  # Display data labels on the bars
             textposition='outside',
-            marker=dict(line=dict(width=0)),
+            marker=dict(line=dict(width=0),color=colors[variable]),
             # showlegend=False, 
         ))
 
