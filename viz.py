@@ -239,6 +239,19 @@ app.layout = html.Div(style={'backgroundColor': '#f2f2f2'}, children=[
                                        'padding': '10px', 'border-radius': '15px', 'border': '2px solid #ddd', 'background-color': '#f0f8ff'}),
         ], style={'width': '100%', 'display': 'flex','justify-content':'space-around'}),
     ]),
+    html.Div(
+    children=[
+        html.P("Copyright © Jal Jeevan Mission - Indian Institute of Management Banglore. All rights reserved."),
+    ],
+    style={
+        'text-align': 'center',
+        'background-color': '#f0f0f0',  # Optional: Set background color for the footer
+        'padding': '10px',
+        'position': 'flex',
+        'bottom': '0',
+        'width': '100%',
+    }
+)
 ])
 
 # Callback to update block dropdown based on selected district
